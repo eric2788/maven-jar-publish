@@ -4,7 +4,7 @@ Github actions that package jar with maven and upload to releases.
 
 ## Inputs
 
-check [actions.yml](/actions.yml)
+check [action.yml](/action.yml)
 
 ## Example
 
