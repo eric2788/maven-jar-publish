@@ -1,10 +1,5 @@
-This is an update log
-with multiple line
-support....
+### ChangeLog
 
-### Update
-
-- added magic
-- fixed not work
-
-etc.
+- update 1
+- update 2
+- update 3

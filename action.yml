@@ -19,13 +19,11 @@ inputs:
     required: false
     default: './target'
   body:
-    description: 'The release content (either file or text)'
+    description: 'The release content'
     required: false
-    default: 'No Content'
-  body-use-file:
-    description: 'whether the body variable is file name or plain text (if true, will use the content from filename)'
+  body-path:
+    description: 'The release content by file (if specificed then body will be ignored)'
     required: false
-    default: false
   draft:
     description: 'whether the release is draft'
     required: false
@@ -89,17 +87,6 @@ runs:
       with:
         tag_name: ${{ steps.project.outputs.version }}
         delete_release: true
-    - name: Create Release Body Content
-      id: body
-      shell: bash
-      run: |
-        if [ ${{ inputs.body-use-file }} ]
-        then
-          content=$(cat ${{ inputs.body }})
-        else
-          content=${{ inputs.body }}
-        fi
-        echo "::set-output name=content::$content"
 
     - name: Create Release
       id: create_release
@@ -107,7 +94,8 @@ runs:
       with:
         tag_name: ${{ steps.project.outputs.version }}
         release_name: Release ${{ github.repository }} v${{ steps.project.outputs.version }}
-        body: ${{ steps.body.outputs.content }}
+        body: ${{ inputs.body }}
+        body_path: ${{ inputs.body-path }}
         draft: ${{ inputs.draft }}
         prerelease: ${{ inputs.pre-release }}
 

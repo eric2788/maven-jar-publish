@@ -1,8 +1,5 @@
 name: Test Packaing Jar And Upload
 
-env:
-  locate: '.'
-
 on:
   push:
     branches: [ develop ]
@@ -16,20 +13,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        body: changelog.md
-        body-use-file: true
-
-
-  test_variables:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: test variables
-      id: var
-      run: |
-        artifact=$(mvn help:evaluate -Dexpression=project.build.finalName -q -DforceStdout -f ${{ env.locate }}/pom.xml)
-        echo $artifact
-        echo "::set-output name=artifact::$artifact"
-    - name: show step
-      run: |
-        echo "artifact: ${{ steps.var.outputs.artifact }}"
+        body-path: changelog.md
