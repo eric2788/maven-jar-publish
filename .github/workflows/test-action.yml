@@ -6,7 +6,7 @@ on:
 
 env:
   update: false
-  update-readme: true
+  update_readme: true
 
 jobs:
   build_jar:
@@ -20,7 +20,7 @@ jobs:
       with:
         body-path: changelog.md
   build_readme:
-    if: ${{ env.update-readme }}
+    if: ${{ env.update_readme }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
