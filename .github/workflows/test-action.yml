@@ -1,11 +1,16 @@
 name: Test Packaing Jar And Upload
 
+env:
+  update: false
+  update-readme: true
+
 on:
   push:
     branches: [ master ]
 
 jobs:
   build_jar:
+    if: ${{ env.update }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -14,3 +19,12 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         body-path: changelog.md
+  build_readme:
+    if: ${{ env.update-readme }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: bitflight-devops/github-action-readme-generator@v1.0.12
+      with:
+        versioning_default_branch: master
+        
