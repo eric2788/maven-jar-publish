@@ -6,6 +6,7 @@ on:
 
 jobs:
   build_jar:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -13,3 +14,17 @@ jobs:
       with:
         body: changelog.md
         body-use-file: true
+
+
+  test_variables:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: test variables
+      run: |
+        version=`mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f ${{ inputs.locate }}/pom.xml`
+        echo $version
+        version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f ${{ inputs.locate }}/pom.xml)
+        echo $version
+        echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f ${{ inputs.locate }}/pom.xml)"
+        echo $version
