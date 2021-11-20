@@ -1,0 +1,105 @@
+name: 'Maven Jar Publish'
+description: 'maven package jar and upload to releases'
+author: 'Eric Lam'
+branding:
+  icon: 'package'
+  color: 'blue'
+
+inputs:
+  java-version:
+    description: 'the java version to build'
+    required: true
+  locate:
+    description: 'the location of pom.xml (to build)'
+    required: false
+    default: '.'
+  upload-path:
+    description: 'the path that jar in (default is ./target)'
+    required: false
+    default: './target'
+  body:
+    description: 'The release content (either file or text)'
+    required: false
+    default: 'No Content'
+  body-use-file:
+    description: 'Wether the body variable is file name or plain text (if true, will use the content from filename)'
+    required: false
+    default: false
+  draft:
+    description: 'whether the release is draft'
+    required: false
+    default: false
+  pre-release:
+    description: 'whether the release is pre-release'
+    required: false
+    default: false
+
+
+runs:
+  using: "composite"
+  steps: 
+     - name: Set up JDK ${{ inputs.java-version }}
+        id: setup-java
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ inputs.java-version }}
+
+    - name: Setup variables
+      id: project
+      shell: bash
+      run: |
+        # fetch maven version
+        echo "Fetching maven version..."
+        version=$(echo mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f ${{ inputs.locate }}/pom.xml)
+        echo "Fetched success. The Project version is $version"
+
+        # fetch maven build final name
+        echo "Fetching maven build final name..."
+        artifact=$(echo mvn help:evaluate -Dexpression=project.build.finalName -q -DforceStdout -f ${{ inputs.locate }}/pom.xml)
+        echo "Fetched success, The project build final name will be $artifact"
+
+        echo '::set-output name=version::$version'
+        echo '::set-output name=artifact::$artifact'
+
+    - name: Packaging Jar
+      id: packaging-jar
+      shell: bash
+      run: |
+        mvn -B package --file ${{ inputs.locate }}/pom.xml
+    - name: Delete existing release and tag
+      id: delete-tag-release
+      uses: dev-drprasad/delete-tag-and-release@v0.1.2
+      with:
+        tag_name: ${{ steps.project.outputs.version }}
+        delete_release: true
+    - name: Create Release Body Content
+      id: body
+      shell: bash
+      run: |
+        if [ ${{ inputs.body-use-file }} ]
+        then
+          content=$(cat ${{ inputs.body }})
+        else
+          content=${{ inputs.body }}
+        fi
+        echo '::set-output name=content::$content'
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      with:
+        tag_name: ${{ steps.project.outputs.version }}
+        release_name: Release ${{ github.repository }} v${{ steps.project.outputs.version }}
+        body: ${{ steps.body.outputs.content }}
+        draft: ${{ inputs.draft }}
+        prerelease: ${{ inputs.pre-release }}
+
+    - name: Upload Release jar
+      id: upload-release-asset-jar
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ inputs.upload-path }}/${{ steps.project.outputs.artifact }}.jar
+        asset_name: ${{ steps.project.outputs.artifact }}.jar
+        asset_content_type: application/java-archive
+

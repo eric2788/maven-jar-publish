@@ -1,0 +1,16 @@
+name: Test Packaing Jar And Upload
+
+on:
+  push:
+    branches: []
+
+jobs:
+  build_jar:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: eric2788/maven-jar-publish@master
+      with:
+        java-version: 11
+        body: changelog.txt
+        body-use-file: true
