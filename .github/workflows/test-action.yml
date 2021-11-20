@@ -2,7 +2,7 @@ name: Test Packaing Jar And Upload
 
 on:
   push:
-    branches: [ master ]
+    branches: [ develop ]
 
 jobs:
   build_jar:
