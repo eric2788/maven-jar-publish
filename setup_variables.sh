@@ -3,17 +3,17 @@
 locate=$1
 
 fetch_maven() {
-    return $(mvn help:evaluate -Dexpression=$1 -q -DforceStdout -f $locate/pom.xml)
+    echo $(mvn help:evaluate -Dexpression=$1 -q -DforceStdout -f $locate/pom.xml)
 }
 
 # fetch maven version
 echo "Fetching maven version..."
-version=fetch_maven "project.version"
+version=$(fetch_maven "project.version")
 echo "Fetched success. The Project version is $version"
 
 # fetch maven build final name
 echo "Fetching maven build final name..."
-artifact=fetch_maven "project.build.finalName"
+artifact=$(fetch_maven "project.build.finalName")
 echo "Fetched success, The project build final name will be $artifact"
 
 jdk_version=$2
@@ -22,7 +22,7 @@ if [ -z $jdk_version ] || [ $jdk_version = "NONE" ]
 then
   # fetch maven build jdk version
   echo "Not providing jdk version, Fetching maven build jdk version..."
-  jdk_version=fetch_maven "maven.compiler.target"
+  jdk_version=$(fetch_maven "maven.compiler.target")
 
   if [ ! $? -eq 0 ]
   then
