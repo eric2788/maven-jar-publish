@@ -4,13 +4,9 @@ on:
   push:
     branches: [ master ]
 
-env:
-  update: false
-  update_readme: true
-
 jobs:
   build_jar:
-    if: ${{ env.update }}
+    if: ${{ false}}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -20,7 +16,7 @@ jobs:
       with:
         body-path: changelog.md
   build_readme:
-    if: ${{ env.update_readme }}
+    if: ${{ true }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
