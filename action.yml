@@ -35,6 +35,8 @@ inputs:
     required: false
     default: false
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 runs:
   using: "composite"
