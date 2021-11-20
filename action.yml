@@ -67,6 +67,7 @@ runs:
           fi
 
           echo "Fetched success, the project jdk version is $jdk_version"
+        fi
 
         echo '::set-output name=version::$version'
         echo '::set-output name=artifact::$artifact'
