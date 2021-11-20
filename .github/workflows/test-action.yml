@@ -2,7 +2,7 @@ name: Test Packaing Jar And Upload
 
 on:
   push:
-    branches: []
+    branches: [ master ]
 
 jobs:
   build_jar:
@@ -11,6 +11,5 @@ jobs:
     - uses: actions/checkout@v2
     - uses: eric2788/maven-jar-publish@master
       with:
-        java-version: 11
-        body: changelog.txt
+        body: changelog.md
         body-use-file: true
