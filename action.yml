@@ -46,22 +46,19 @@ runs:
         # fetch maven version
         echo "Fetching maven version..."
         version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f ${{ inputs.locate }}/pom.xml)
-        echo $version
         echo "Fetched success. The Project version is $version"
 
         # fetch maven build final name
         echo "Fetching maven build final name..."
         artifact=$(mvn help:evaluate -Dexpression=project.build.finalName -q -DforceStdout -f ${{ inputs.locate }}/pom.xml)
-        echo $artifact
         echo "Fetched success, The project build final name will be $artifact"
 
-        jdk_version=${{ inputs.jdk-version }}
+        jdk_version=${{ inputs.java-version }}
         if [ $jdk_version = "NONE" ]
         then
           # fetch maven build jdk version
           echo "Not providing jdk version, Fetching maven build jdk version..."
           jdk_version=$(mvn help:evaluate -Dexpression=maven.compiler.target -q -DforceStdout -f ${{ inputs.locate }}/pom.xml)
-          echo $jdk_version
 
           if [ ! $? -eq 0 ]
           then
