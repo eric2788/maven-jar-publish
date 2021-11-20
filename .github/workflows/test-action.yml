@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: eric2788/maven-jar-publish@devlop
+    - uses: eric2788/maven-jar-publish@develop
       with:
         body: changelog.md
         body-use-file: true
