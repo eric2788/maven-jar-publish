@@ -2,14 +2,13 @@ name: Test Packaing Jar And Upload
 
 env:
   locate: '.'
-  
+
 on:
   push:
     branches: [ develop ]
 
 jobs:
   build_jar:
-    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -20,6 +19,7 @@ jobs:
 
 
   test_variables:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
