@@ -22,9 +22,9 @@ jobs:
     - uses: actions/checkout@v2
     - name: test variables
       run: |
-        version=`mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f ${{ inputs.locate }}/pom.xml`
+        version=`mvn help:evaluate -Dexpression=project.version -q -DforceStdout`
         echo $version
-        version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f ${{ inputs.locate }}/pom.xml)
+        version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout
         echo $version
-        echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f ${{ inputs.locate }}/pom.xml)"
+        echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout"
         echo $version
