@@ -1,2 +1,14 @@
-# maven-jar-publish
-Github actions that package jar with maven and upload to releases.
+<!-- start title -->
+<!-- end title -->
+<!-- start description -->
+<!-- end description -->
+<!-- start contents -->
+<!-- end contents -->
+<!-- start usage -->
+<!-- end usage -->
+<!-- start inputs -->
+<!-- end inputs -->
+<!-- start outputs -->
+<!-- end outputs -->
+<!-- start [.github/ghdocs/examples/] -->
+<!-- end [.github/ghdocs/examples/] -->
