@@ -39,39 +39,13 @@ runs:
     - name: Setup variables
       id: project
       shell: bash
+      run: ${{ github.action_path }}/setup_variables.sh ${{ inputs.locate }} ${{ inputs.java-version }}
+    - name: print
+      shell: bash
       run: |
-        # fetch maven version
-        echo "Fetching maven version..."
-        version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f ${{ inputs.locate }}/pom.xml)
-        echo "Fetched success. The Project version is $version"
-
-        # fetch maven build final name
-        echo "Fetching maven build final name..."
-        artifact=$(mvn help:evaluate -Dexpression=project.build.finalName -q -DforceStdout -f ${{ inputs.locate }}/pom.xml)
-        echo "Fetched success, The project build final name will be $artifact"
-
-        jdk_version=${{ inputs.java-version }}
-        if [ $jdk_version = "NONE" ]
-        then
-          # fetch maven build jdk version
-          echo "Not providing jdk version, Fetching maven build jdk version..."
-          jdk_version=$(mvn help:evaluate -Dexpression=maven.compiler.target -q -DforceStdout -f ${{ inputs.locate }}/pom.xml)
-
-          if [ ! $? -eq 0 ]
-          then
-            echo "Cannot find version from either maven.compiler.target or inputs."
-            exit 1
-          fi
-
-          echo "Fetched success, the project jdk version is $jdk_version"
-        fi
-
-        echo "::set-output name=version::$version"
-        echo "::set-output name=artifact::$artifact"
-        echo "::set-output name=jdk-version::$jdk_version"
-
-    - name: Set up JDK ${{ steps.project.outputs.jdk-version }}
-      id: setup-java
+        echo ${{ steps.project.outputs.jdk-version }} ${{ steps.project.outputs.artifact }}
+      
+    - name: Set up JDK
       uses: actions/setup-java@v1
       with:
         java-version: ${{ steps.project.outputs.jdk-version }}
