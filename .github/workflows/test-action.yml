@@ -1,12 +1,12 @@
 name: Test Packaing Jar And Upload
 
-env:
-  update: false
-  update-readme: true
-
 on:
   push:
     branches: [ master ]
+
+env:
+  update: false
+  update-readme: true
 
 jobs:
   build_jar:
@@ -27,4 +27,4 @@ jobs:
     - uses: bitflight-devops/github-action-readme-generator@v1.0.12
       with:
         versioning_default_branch: master
-        
+
