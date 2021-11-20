@@ -23,4 +23,6 @@ jobs:
     - uses: bitflight-devops/github-action-readme-generator@main
       with:
         versioning_enabled: false
+        owner: "eric2788"
+        repo: "maven-jar-publish"
 
