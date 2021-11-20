@@ -45,6 +45,7 @@ runs:
       run: |
         # fetch maven version
         echo "Fetching maven version..."
+        mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f ${{ inputs.locate }}/pom.xml
         version=`mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f ${{ inputs.locate }}/pom.xml`
         echo "Fetched success. The Project version is $version"
 
