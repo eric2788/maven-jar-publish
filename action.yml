@@ -39,11 +39,7 @@ runs:
     - name: Setup variables
       id: project
       shell: bash
-      run: ${{ github.action_path }}/setup_variables.sh ${{ inputs.locate }} ${{ inputs.java-version }}
-    - name: print
-      shell: bash
-      run: |
-        echo ${{ steps.project.outputs.jdk-version }} ${{ steps.project.outputs.artifact }}
+      run: sh ${{ github.action_path }}/setup_variables.sh ${{ inputs.locate }} ${{ inputs.java-version }}
       
     - name: Set up JDK
       uses: actions/setup-java@v1
