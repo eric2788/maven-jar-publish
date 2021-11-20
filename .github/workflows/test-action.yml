@@ -9,6 +9,7 @@ on:
 
 jobs:
   build_jar:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -23,6 +24,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: test variables
+      id: var
       run: |
         artifact=$(mvn help:evaluate -Dexpression=project.build.finalName -q -DforceStdout -f ${{ env.locate }}/pom.xml)
         echo $artifact
+        echo '::set-output name=artifact::$(echo $artifact)'
+    - name: show step
+      run: |
+        echo "artifact: ${{ steps.var.outputs.artifact }}"
