@@ -1,5 +1,8 @@
 name: Test Packaing Jar And Upload
 
+env:
+  locate: '.'
+  
 on:
   push:
     branches: [ develop ]
@@ -22,7 +25,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: test variables
       run: |
-        version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+        version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f ${{ env.locate }}/pom.xml)
         echo $version
-        echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
+        echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f ${{ env.locate }}/pom.xml)"
         echo $version
