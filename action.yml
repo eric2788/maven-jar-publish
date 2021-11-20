@@ -69,9 +69,9 @@ runs:
           echo "Fetched success, the project jdk version is $jdk_version"
         fi
 
-        echo '::set-output name=version::$($version)'
-        echo '::set-output name=artifact::$($artifact)'
-        echo '::set-output name=jdk-version::$($jdk_version)'
+        echo "::set-output name=version::$($version)"
+        echo "::set-output name=artifact::$($artifact)"
+        echo "::set-output name=jdk-version::$($jdk_version)"
 
     - name: Set up JDK ${{ steps.project.outputs.jdk-version }}
       id: setup-java
@@ -100,7 +100,7 @@ runs:
         else
           content=${{ inputs.body }}
         fi
-        echo '::set-output name=content::$content'
+        echo "::set-output name=content::$content"
 
     - name: Create Release
       id: create_release
