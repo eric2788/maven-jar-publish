@@ -6,7 +6,6 @@ on:
 
 jobs:
   build_jar:
-    if: ${{ false}}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -15,12 +14,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         body-path: changelog.md
-  build_readme:
-    if: ${{ true }}
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: bitflight-devops/github-action-readme-generator@main
-      with:
-        versioning_default_branch: master
 
