@@ -19,7 +19,11 @@ then
     echo "Fetching maven build final name..."
     artifact=$(fetch_maven "project.build.finalName")
     echo "Fetched success, The project build final name will be $artifact"
+else
+    artifact="$3-$version"
+    echo "Using provided artifact name, The project build final name will be $artifact"
 fi
+
 
 jdk_version=$2
 
