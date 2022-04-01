@@ -14,14 +14,10 @@ inputs:
     description: 'the location of pom.xml (to build)'
     required: false
     default: '.'
-  upload-path:
-    description: 'the path that jar in (default is ./target)'
+  upload-module:
+    description: 'the path that jar to upload (to fetch variable, please locate the module that need to upload the artifact)'
     required: false
-    default: './target'
-  artifact-name:
-    description: 'the artifact name, default will use from pom.xml'
-    required: false
-    default: 'NONE'
+    default: '.'
   body:
     description: 'The release content'
     required: false
@@ -43,7 +39,7 @@ runs:
     - name: Setup variables
       id: project
       shell: bash
-      run: sh ${{ github.action_path }}/setup_variables.sh ${{ inputs.locate }} ${{ inputs.java-version }} ${{ inputs.artifact-name }}
+      run: sh ${{ github.action_path }}/setup_variables.sh ${{ inputs.upload-module }} ${{ inputs.java-version }}
       
     - name: Set up JDK
       uses: actions/setup-java@v1
@@ -78,7 +74,7 @@ runs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ inputs.upload-path }}/${{ steps.project.outputs.artifact }}.jar
+        asset_path: ${{ inputs.upload-module }}/target/${{ steps.project.outputs.artifact }}.jar
         asset_name: ${{ steps.project.outputs.artifact }}.jar
         asset_content_type: application/java-archive
 
