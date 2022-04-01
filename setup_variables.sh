@@ -11,18 +11,10 @@ echo "Fetching maven version..."
 version=$(fetch_maven "project.version")
 echo "Fetched success. The Project version is $version"
 
-artifact=$3
-
-if [ $artifact = "NONE" ] # didn't provid the artifact name
-then
-     # fetch maven build final name
-    echo "Fetching maven build final name..."
-    artifact=$(fetch_maven "project.build.finalName")
-    echo "Fetched success, The project build final name will be $artifact"
-else
-    artifact="$3-$version"
-    echo "Using provided artifact name, The project build final name will be $artifact"
-fi
+# fetch maven build final name
+echo "Fetching maven build final name..."
+artifact=$(fetch_maven "project.build.finalName")
+echo "Fetched success, The project build final name will be $artifact"
 
 
 jdk_version=$2
