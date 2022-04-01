@@ -15,7 +15,7 @@ inputs:
     required: false
     default: '.'
   upload-module:
-    description: 'the path that jar to upload (to fetch variable, please locate the module that need to upload the artifact)'
+    description: 'the module path that to upload the artifact. (the module name must same as the module path)'
     required: false
     default: '.'
   body:
