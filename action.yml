@@ -53,7 +53,7 @@ runs:
         mvn -B package --file ${{ inputs.locate }}/pom.xml
     - name: Delete existing release and tag
       id: delete-tag-release
-      uses: dev-drprasad/delete-tag-and-release@v0.1.2
+      uses: dev-drprasad/delete-tag-and-release@v1.0
       with:
         tag_name: ${{ steps.project.outputs.version }}
         delete_release: true
